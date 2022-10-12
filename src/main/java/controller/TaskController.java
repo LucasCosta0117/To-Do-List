@@ -46,6 +46,37 @@ public class TaskController {
 
     public void update(Task task){
         //Método para atualizar o banco de dados (UPDATE)
+        String sql = "UPDATE task SET " +
+                "idProject = ?," +
+                "name = ?," +
+                "description = ?," +
+                "notes = ?," +
+                "isCompleted = ?," +
+                "deadline = ?," +
+                "createdAt = ?," +
+                "updatedAt = ? " +
+                "WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement statement = null;
+
+        try {
+            conn = ConnectionFactory.getConnection();
+            statement = conn.prepareStatement(sql);
+            statement.setInt(1, task.getIdProject());
+            statement.setString(2, task.getName());
+            statement.setString(3, task.getDescription());
+            statement.setString(4, task.getNotes());
+            statement.setBoolean(5, task.isCompleted());
+            statement.setDate(6, new Date(task.getDeadLine().getTime()));
+            statement.setDate(7, new Date(task.getCreatedAt().getTime()));
+            statement.setDate(8, new Date(task.getUpdatedAt().getTime()));
+            statement.setInt(9, task.getId());
+            statement.execute();
+        } catch (Exception exception) {
+            throw new RuntimeException("Erro ao atualizar uma tarefa", exception);
+        } finally {
+            ConnectionFactory.closeConnection(conn, statement);
+        }
     }
 
     public void removeById(int taskId) {
