@@ -11,7 +11,7 @@ import java.util.List;
 
 public class TaskController {
 
-    public void save(Task task) throws SQLException {
+    public void save(Task task) {
         //Método para inserir registros no banco de dados (INSERT)
         String sql = "INSERT INTO task " +
                 "(idProject," +
@@ -37,10 +37,10 @@ public class TaskController {
             statement.setDate(7, new Date(task.getCreatedAt().getTime()));
             statement.setDate(8, new Date(task.getUpdatedAt().getTime()));
             statement.execute();
-        } catch (SQLException exception) {
-            throw new SQLException("Erro ao inserir uma nova tarefa", exception);
+        } catch (Exception exception) {
+            throw new RuntimeException("Erro ao inserir uma nova tarefa", exception);
         } finally {
-            ConnectionFactory.closeConnection(conn);
+            ConnectionFactory.closeConnection(conn, statement);
         }
     }
 
@@ -48,7 +48,7 @@ public class TaskController {
         //Método para atualizar o banco de dados (UPDATE)
     }
 
-    public void removeById(int taskId) throws SQLException {
+    public void removeById(int taskId) {
         //Método para deletar no banco de dados(DELETE)
         String sql = "DELETE FROM task WHERE id = ?";
         Connection conn = null;
@@ -59,10 +59,10 @@ public class TaskController {
             statement = conn.prepareStatement(sql);
             statement.setInt(1, taskId);
             statement.execute();
-        } catch ( SQLException exception ) {
-            throw new SQLException("Erro ao deletar a tarefa", exception);
+        } catch ( Exception exception ) {
+            throw new RuntimeException("Erro ao deletar a tarefa", exception);
         } finally {
-            ConnectionFactory.closeConnection(conn);
+            ConnectionFactory.closeConnection(conn, statement);
         }
     }
 
