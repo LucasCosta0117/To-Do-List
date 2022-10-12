@@ -3,10 +3,8 @@ package controller;
 import model.Task;
 import util.ConnectionFactory;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskController {
@@ -99,7 +97,40 @@ public class TaskController {
 
     public List<Task> getAll(int idProject){
         //Método para retornar todas as tarefas do banco de dados (SELECT)
-        return null;
+        String sql = "SELECT * FROM task WHERE idProject = ?";
+        Connection conn = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<Task> tasks = new ArrayList<>();
+
+        try {
+            conn = ConnectionFactory.getConnection();
+            statement = conn.prepareStatement(sql);
+            statement.setInt(1, idProject);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                Task task = new Task();
+
+                task.setId(resultSet.getInt("id"));
+                task.setIdProject(resultSet.getInt("idProject"));
+                task.setName(resultSet.getString("name"));
+                task.setDescription(resultSet.getString("description"));
+                task.setNotes(resultSet.getString("notes"));
+                task.setCompleted(resultSet.getBoolean("isCompleted"));
+                task.setDeadLine(resultSet.getDate("deadline"));
+                task.setCreatedAt(resultSet.getDate("createdAt"));
+                task.setUpdatedAt(resultSet.getDate("updatedAt"));
+
+                tasks.add(task);
+            }
+        } catch (Exception exception) {
+            throw new RuntimeException("Erro ao listar as tarefas", exception);
+        } finally {
+            ConnectionFactory.closeConnection(conn, statement, resultSet);
+        }
+
+        return tasks;
     }
 
 }
