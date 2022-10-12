@@ -36,7 +36,7 @@ public class TaskController {
             statement.setDate(8, new Date(task.getUpdatedAt().getTime()));
             statement.execute();
         } catch (Exception exception) {
-            throw new RuntimeException("Erro ao inserir uma nova tarefa", exception);
+            throw new RuntimeException("Erro ao inserir uma nova tarefa " + exception.getMessage(), exception);
         } finally {
             ConnectionFactory.closeConnection(conn, statement);
         }
@@ -71,7 +71,7 @@ public class TaskController {
             statement.setInt(9, task.getId());
             statement.execute();
         } catch (Exception exception) {
-            throw new RuntimeException("Erro ao atualizar uma tarefa", exception);
+            throw new RuntimeException("Erro ao atualizar a tarefa " + exception.getMessage(), exception);
         } finally {
             ConnectionFactory.closeConnection(conn, statement);
         }
@@ -89,7 +89,7 @@ public class TaskController {
             statement.setInt(1, taskId);
             statement.execute();
         } catch ( Exception exception ) {
-            throw new RuntimeException("Erro ao deletar a tarefa", exception);
+            throw new RuntimeException("Erro ao deletar a tarefa " + exception.getMessage(), exception);
         } finally {
             ConnectionFactory.closeConnection(conn, statement);
         }
@@ -125,7 +125,7 @@ public class TaskController {
                 tasks.add(task);
             }
         } catch (Exception exception) {
-            throw new RuntimeException("Erro ao listar as tarefas", exception);
+            throw new RuntimeException("Erro ao listar as tarefas " + exception.getMessage(), exception);
         } finally {
             ConnectionFactory.closeConnection(conn, statement, resultSet);
         }
