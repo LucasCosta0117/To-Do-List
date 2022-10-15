@@ -19,6 +19,7 @@ public class Project {
 
     public Project() {
         this.createdAt = new Date();
+        this.updatedAt = new Date();
     }
 
 
@@ -58,9 +59,12 @@ public class Project {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpdatedAt() {
+        this.updatedAt = new Date();
     }
+
+    public void setUpdatedAt(Date updatedAt) { this.updatedAt = updatedAt; }
+
 
     @Override
     public String toString() {

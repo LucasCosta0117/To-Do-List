@@ -25,8 +25,9 @@ public class Task {
         this.updatedAt = updatedAt;
     }
 
-    public Task(){
+    public Task() {
         this.createdAt = new Date();
+        this.updatedAt = new Date();
     }
 
     public int getId() {
@@ -97,9 +98,8 @@ public class Task {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+    public void setUpdatedAt() { this.updatedAt = new Date(); }
+    public void setUpdatedAt(Date updatedAt) { this.updatedAt = updatedAt; }
 
     @Override
     public String toString() {
