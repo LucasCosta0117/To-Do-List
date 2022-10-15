@@ -97,7 +97,7 @@ public class ProjectController {
                 Project project = new Project();
 
                 project.setId(resultSet.getInt("id"));
-                project.setName(resultSet.getString("nome"));
+                project.setName(resultSet.getString("name"));
                 project.setDescription(resultSet.getString("description"));
                 project.setCreatedAt(resultSet.getDate("createdAt"));
                 project.setUpdatedAt(resultSet.getDate("updatedAt"));
