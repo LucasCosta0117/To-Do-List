@@ -29,7 +29,7 @@ public class ProjectController {
             statement.setDate(4, new Date(project.getUpdatedAt().getTime()));
             statement.execute();
         } catch (Exception exception){
-            throw new RuntimeException ("Erro ao tentar inserir novo projeto" ,exception);
+            throw new RuntimeException ("Erro ao tentar inserir novo projeto" + exception.getMessage(),exception);
         } finally {
             ConnectionFactory.closeConnection(conn, statement);
         }
@@ -56,7 +56,7 @@ public class ProjectController {
             statement.setInt(5, project.getId());
             statement.execute();
         } catch (Exception exception) {
-            throw new RuntimeException("Erro ao atualizar os dados do projeto", exception);
+            throw new RuntimeException("Erro ao atualizar os dados do projeto" + exception.getMessage(), exception);
         } finally {
             ConnectionFactory.closeConnection(conn, statement);
         }
@@ -74,7 +74,7 @@ public class ProjectController {
             statement.setInt(1, projectId);
             statement.execute();
         } catch (Exception exception) {
-            throw new RuntimeException ("Erro ao deletar um Projeto", exception);
+            throw new RuntimeException ("Erro ao deletar um Projeto" + exception.getMessage(), exception);
         } finally {
             ConnectionFactory.closeConnection(conn, statement);
         }
@@ -106,7 +106,7 @@ public class ProjectController {
             }
 
         } catch(Exception exception){
-            throw new RuntimeException("Erro ao exibir todos os projetos.", exception);
+            throw new RuntimeException("Erro ao exibir todos os projetos " + exception.getMessage(), exception);
         }finally {
             ConnectionFactory.closeConnection(conn, statement, resultSet);
         }
