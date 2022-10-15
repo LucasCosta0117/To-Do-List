@@ -10,24 +10,22 @@ public class ProjectController {
 
     public void save (Project project) {
         //Método para inserir registros no banco de dados (INSERT)
-        String sql = "INSERT INTO project " +
-                "(id," +
+        String sql = "INSERT INTO project (" +
                 "name," +
                 "description, " +
                 "createdAt," +
                 "updatedAt ) " +
-                "VALUES (?, ?, ?, ?, ?);";
+                "VALUES (?, ?, ?, ?);";
         Connection conn = null;
         PreparedStatement statement = null;
 
         try {
             conn = ConnectionFactory.getConnection();
             statement = conn.prepareStatement(sql);
-            statement.setInt(1, project.getId());
-            statement.setString(2, project.getName());
-            statement.setString(3, project.getDescription());
-            statement.setDate(4, new Date(project.getCreatedAt().getTime()));
-            statement.setDate(5, new Date(project.getUpdatedAt().getTime()));
+            statement.setString(1, project.getName());
+            statement.setString(2, project.getDescription());
+            statement.setDate(3, new Date(project.getCreatedAt().getTime()));
+            statement.setDate(4, new Date(project.getUpdatedAt().getTime()));
             statement.execute();
         } catch (Exception exception){
             throw new RuntimeException ("Erro ao tentar inserir novo projeto" ,exception);
